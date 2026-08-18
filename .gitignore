@@ -1,0 +1,16 @@
+# Build output — the exe is 39 MB; attach it to a GitHub Release instead
+ResumeBot.exe
+source/dist/
+source/build/
+source/*.spec
+backup-original/
+
+# Generated at runtime
+output/
+uploads/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/

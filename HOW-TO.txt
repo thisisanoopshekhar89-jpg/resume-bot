@@ -1,0 +1,98 @@
+========================================================
+  RESUME & COVER-LETTER BOT  —  How to use
+========================================================
+
+WHAT IT IS
+  A personal tool that tailors Anoop Shekhar's resume and cover
+  letter to any job description (JD), and scores the match.
+
+  It now does three things:
+    1. TAILORED RESUME  - re-ordered, re-emphasized, and re-worded
+       into the JD's own vocabulary, showing the projects and skills
+       that JD actually cares about.
+    2. COVER LETTER     - built from the themes the JD matched.
+    3. MASTER CV        - your complete record, no JD applied:
+       every skill, every project, every bullet.
+
+TO RUN
+  1. Double-click  ResumeBot.exe
+       - A small black window opens (leave it open while using the tool).
+       - Your web browser opens automatically to  http://127.0.0.1:5057
+       - First launch can take 10-20 seconds while it unpacks. Be patient.
+       - If Windows SmartScreen warns "unknown publisher":
+         click  More info  ->  Run anyway.  (It's your own file.)
+
+  2. In the browser:
+       - Paste the JD text  OR  click the box to upload a screenshot of the JD.
+       - (Optional) type the Company and Role -> personalizes the cover letter.
+       - Click  "Generate resume"  and/or  "Generate cover letter".
+       - Click  "Master CV (everything)"  any time - it ignores the JD.
+
+  3. Check the match score, then download the PDF(s) from the panel.
+       - PDFs are also saved in the  "output"  folder next to ResumeBot.exe.
+
+TO STOP
+  - Close the browser tab, then close the black window (or press Ctrl+C in it).
+
+--------------------------------------------------------
+SPEAKING THE JD'S LANGUAGE
+--------------------------------------------------------
+  The resume is re-worded into whatever wording the JD uses, because that
+  is what keyword-matching ATS filters score on. For example:
+
+     JD says "business process re-engineering" -> your "process study"
+     bullets are re-worded to "process mapping / re-engineering".
+     JD says "large language model" -> "LLM" becomes "large language model".
+     JD says "claims handling"      -> "claims documentation" follows suit.
+
+  The results panel lists every swap it made, under
+  "Re-worded to the JD's language", so you can see exactly what changed.
+
+  This only ever swaps interchangeable wordings for the SAME claim. It never
+  changes what you did, never adds a skill you don't have, and anything the
+  JD wants that isn't in your profile is still reported as a "gap".
+
+--------------------------------------------------------
+TAILORED RESUME vs MASTER CV
+--------------------------------------------------------
+  TAILORED  ~2 pages. All 24 experience bullets are always kept (re-ordered
+            by relevance, never dropped), but only the 4 most JD-relevant
+            projects are shown - the section is called "Selected ... Projects".
+            Send this one to employers.
+
+  MASTER    ~3 pages. Everything: 37 skills, 6 projects, 24 bullets, 6 roles.
+            Nothing re-ordered or re-worded. Keep this as your own reference
+            and as the thing you edit / grow over time.
+
+--------------------------------------------------------
+EDITING YOUR PROFILE
+--------------------------------------------------------
+  Everything on both documents comes from ONE file:  source\profile.py
+  Add a job, a bullet, a skill or a project there and both documents pick
+  it up. To change how many projects the tailored resume shows, edit
+  MAX_PROJECTS near the top of  source\aligner.py .
+
+  To add a new synonym so the bot recognizes another way of saying something
+  you already do, add it to the SYNONYMS list in  source\aligner.py .
+
+NOTES
+  - Works fully offline. No API key, no LLM. The only internet use is an
+    optional lookup of the company name you type (to personalize the cover
+    letter). Skips silently offline.
+  - Screenshot reading (OCR) uses the built-in Windows text engine - Windows 10/11 only.
+  - Runs on port 5057 (kept off 5000 so it won't clash with other local apps).
+  - The previous version of the tool is kept in  backup-original\ .
+
+MOVING TO ANOTHER PC
+  - Just copy this whole "Resume Bot" folder. No Python needed - the .exe is
+    self-contained. Target machine must be Windows 10/11.
+
+REBUILDING THE EXE (only if you edit the source)
+    pip install flask reportlab winsdk pyinstaller
+    cd source
+    pyinstaller --noconfirm --clean --onefile --name ResumeBot ^
+      --add-data "templates;templates" --collect-all winsdk app.py
+  The new exe appears in  source\dist\ResumeBot.exe .
+  You can also just run it without building:   python source\app.py
+
+========================================================

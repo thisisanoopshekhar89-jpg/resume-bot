@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume &amp; Cover-Letter Bot — Anoop Shekhar</title>
+  <style>
+    :root{
+      --navy:#16324F; --deep:#0E2338; --steel:#3A6EA5; --steel-2:#5B8BC0;
+      --ink:#1E2A35; --slate:#63707E; --line:#DCE3EB; --line-2:#EAEFF4;
+      --bg:#EEF1F5; --card:#FFFFFF; --good:#1C7A4D; --gap:#B5611A;
+      --goodbg:#E6F3EC; --gapbg:#FAEEE0; --shadow:0 1px 2px rgba(14,35,56,.05),0 8px 24px rgba(14,35,56,.06);
+    }
+    *{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{margin:0;min-height:100vh;color:var(--ink);
+      background:
+        radial-gradient(1100px 460px at 88% -8%, #E3EAF2 0%, rgba(227,234,242,0) 60%),
+        radial-gradient(900px 420px at -6% 8%, #E7ECF2 0%, rgba(231,236,242,0) 55%),
+        var(--bg);
+      font:15px/1.55 "Segoe UI",Calibri,system-ui,-apple-system,sans-serif;}
+    .wrap{max-width:1120px;margin:0 auto;padding:34px 22px 64px;}
+
+    /* header */
+    header{display:flex;align-items:center;gap:15px;margin-bottom:8px;}
+    .badge{width:46px;height:46px;border-radius:11px;flex:none;display:grid;place-items:center;
+      background:linear-gradient(150deg,var(--navy),var(--steel));color:#fff;
+      font:700 17px/1 Georgia,serif;letter-spacing:.5px;box-shadow:var(--shadow);}
+    .htxt h1{font:600 24px/1.05 Georgia,"Times New Roman",serif;color:var(--deep);margin:0;}
+    .htxt p{margin:3px 0 0;color:var(--slate);font-size:13px;}
+    .htxt b{color:var(--steel);font-weight:600;}
+    .divider{height:2px;margin:16px 0 26px;border-radius:2px;
+      background:linear-gradient(90deg,var(--navy),var(--steel) 45%,transparent);}
+
+    .grid{display:grid;grid-template-columns:1fr 372px;gap:22px;align-items:start;}
+    @media(max-width:900px){.grid{grid-template-columns:1fr;}}
+
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+      padding:22px 24px;box-shadow:var(--shadow);}
+    .card+.card{margin-top:0}
+    .eyebrow{font:600 11px/1 "Segoe UI",sans-serif;text-transform:uppercase;letter-spacing:.11em;
+      color:var(--steel);margin:0 0 14px;}
+
+    label{display:block;font-weight:600;color:var(--deep);margin:0 0 8px;font-size:13.5px;}
+    textarea{width:100%;min-height:250px;resize:vertical;padding:13px 15px;
+      border:1px solid var(--line);border-radius:10px;font:13px/1.55 Consolas,"Courier New",monospace;
+      color:var(--ink);background:#FBFCFE;transition:border-color .15s,box-shadow .15s;}
+    textarea:focus,input:focus{outline:none;border-color:var(--steel);
+      box-shadow:0 0 0 3px rgba(58,110,165,.16);}
+
+    /* separator */
+    .or{display:flex;align-items:center;gap:12px;color:var(--slate);font-size:11px;
+      text-transform:uppercase;letter-spacing:.12em;margin:18px 0 6px;}
+    .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line);}
+
+    /* drop zone */
+    .drop{position:relative;margin-top:6px;border:1.5px dashed var(--steel-2);border-radius:12px;
+      background:#F5F9FD;padding:16px 16px;display:flex;align-items:center;gap:13px;
+      transition:background .15s,border-color .15s;cursor:pointer;}
+    .drop:hover,.drop.hot{background:#ECF4FC;border-color:var(--steel);}
+    .drop .ic{width:38px;height:38px;border-radius:9px;flex:none;display:grid;place-items:center;
+      background:#fff;border:1px solid var(--line);font-size:19px;}
+    .drop .t{font-size:13px;color:var(--slate);line-height:1.4;}
+    .drop .t b{color:var(--deep);display:block;font-size:13.5px;margin-bottom:1px;}
+    .drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+    .fname{margin:8px 2px 0;font-size:12.5px;color:var(--steel);font-weight:600;min-height:16px;}
+
+    .row{display:flex;gap:13px;margin-top:16px;flex-wrap:wrap;}
+    .row>div{flex:1 1 150px;}
+    input[type=text]{width:100%;padding:10px 13px;border:1px solid var(--line);
+      border-radius:10px;font:14px "Segoe UI",sans-serif;color:var(--ink);background:#FBFCFE;}
+
+    .btnrow{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;}
+    .btnrow .btn{flex:1 1 200px;margin-top:0;}
+    .btn{width:100%;background:linear-gradient(150deg,var(--navy),var(--steel));
+      color:#fff;border:0;border-radius:11px;padding:14px 20px;font-size:14.5px;font-weight:600;
+      cursor:pointer;letter-spacing:.2px;box-shadow:0 6px 16px rgba(22,50,79,.25);
+      transition:transform .06s,box-shadow .15s,background .15s;}
+    .btn:hover{box-shadow:0 8px 22px rgba(22,50,79,.32);}
+    .btn:active{transform:translateY(1px);}
+    .btn:focus-visible{outline:3px solid var(--steel-2);outline-offset:2px;}
+    .btn.ghostbtn{background:#fff;color:var(--navy);border:1.5px solid var(--navy);
+      box-shadow:0 2px 8px rgba(22,50,79,.08);}
+    .btn.ghostbtn:hover{background:#F1F5FA;box-shadow:0 4px 12px rgba(22,50,79,.12);}
+    .hint{color:var(--slate);font-size:12.5px;margin:13px 2px 0;line-height:1.5;}
+
+    .err{background:var(--gapbg);color:var(--gap);border:1px solid #E6C69C;
+      padding:12px 15px;border-radius:11px;margin-bottom:18px;font-size:14px;font-weight:500;}
+
+    /* results */
+    .score{display:flex;align-items:center;gap:15px;margin:2px 0 4px;}
+    .ring{--v:0;width:78px;height:78px;border-radius:50%;flex:none;
+      background:conic-gradient(var(--steel) calc(var(--v)*3.6deg), #E3E9F0 0);
+      display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(58,110,165,.15);}
+    .ring b{background:#fff;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
+      font:700 19px/1 Georgia,serif;color:var(--deep);font-variant-numeric:tabular-nums;}
+    .score .lab{font-size:13.5px;color:var(--ink);}
+    .rating{font:700 15px/1.15 "Segoe UI",sans-serif;color:var(--deep);}
+    .ratingsub{font-size:12px;color:var(--slate);margin-top:3px;}
+    .bars{display:flex;flex-direction:column;gap:9px;margin:15px 0 2px;}
+    .bar{display:grid;grid-template-columns:104px 1fr 40px;align-items:center;gap:10px;
+      font-size:12px;color:var(--slate);}
+    .bar span{font-weight:600;color:var(--deep);}
+    .bar i{height:8px;border-radius:5px;background:#E3E9F0;position:relative;display:block;overflow:hidden;}
+    .bar i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:calc(var(--w)*1%);
+      border-radius:5px;background:linear-gradient(90deg,var(--steel-2),var(--navy));}
+    .bar b{text-align:right;font-variant-numeric:tabular-nums;color:var(--deep);font-weight:700;}
+
+    .role{font:600 15px/1.32 Georgia,serif;color:var(--deep);margin:0 0 12px;
+      padding-bottom:12px;border-bottom:1px solid var(--line-2);}
+
+    h3{font:600 11px/1 "Segoe UI",sans-serif;text-transform:uppercase;letter-spacing:.1em;
+      color:var(--slate);margin:19px 0 10px;}
+    ul.tags{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px;}
+    ul.tags li{font-size:12px;padding:5px 11px;border-radius:20px;font-weight:600;line-height:1.2;}
+    li.m{background:var(--goodbg);color:var(--good);}
+    li.g{background:var(--gapbg);color:var(--gap);}
+    li.w{background:#eef3fb;color:#2c5b8f;font-family:ui-monospace,Consolas,monospace;font-size:11px;}
+
+    .dl{display:flex;flex-direction:column;gap:9px;margin:16px 0 2px;}
+    .dl a{text-decoration:none;font-weight:600;font-size:14px;padding:13px 17px;border-radius:11px;
+      display:flex;justify-content:space-between;align-items:center;transition:background .15s;}
+    a.primary{background:var(--navy);color:#fff;}
+    a.primary:hover{background:var(--deep);}
+    a.primary .k{font-size:11px;opacity:.7;font-weight:600;letter-spacing:.06em;}
+    a.ghost{border:1px solid var(--line);color:var(--navy);background:#fff;}
+    a.ghost:hover{background:#F1F5FA;border-color:var(--steel-2);}
+
+    .steps{margin:6px 0 0;padding:0;list-style:none;counter-reset:s;}
+    .steps li{position:relative;padding:0 0 15px 38px;color:var(--slate);font-size:13px;line-height:1.5;}
+    .steps li:last-child{padding-bottom:0}
+    .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:-1px;
+      width:26px;height:26px;border-radius:8px;background:#EEF3F9;color:var(--steel);
+      font:700 12px/26px "Segoe UI",sans-serif;text-align:center;}
+    .steps b{color:var(--deep);}
+
+    .note{font-size:12.5px;color:var(--slate);margin-top:13px;line-height:1.5;}
+    code{background:#EEF2F6;padding:1px 6px;border-radius:5px;font-size:12px;color:var(--deep);}
+    .foot{color:var(--slate);font-size:12px;margin-top:32px;text-align:center;}
+    .foot b{color:var(--steel)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">AS</div>
+      <div class="htxt">
+        <h1>Resume &amp; Cover-Letter Bot</h1>
+        <p>Paste a job description <b>or</b> drop a screenshot → a JD-aligned résumé and cover letter. Runs fully offline.</p>
+      </div>
+    </header>
+    <div class="divider"></div>
+
+    {% if error %}<div class="err">⚠ {{ error }}</div>{% endif %}
+
+    <form method="post" action="/generate" enctype="multipart/form-data" id="f">
+      <div class="grid">
+        <!-- INPUT -->
+        <div class="card">
+          <p class="eyebrow">Job description</p>
+          <label for="jd">Paste the JD text</label>
+          <textarea id="jd" name="jd" placeholder="Paste the full job description here…">{{ jd }}</textarea>
+
+          <div class="or">or upload a screenshot</div>
+          <label class="drop" id="drop">
+            <span class="ic">📷</span>
+            <span class="t"><b>Drop a JD screenshot or click to browse</b>
+              Read on-device with Windows OCR — nothing is uploaded anywhere.</span>
+            <input type="file" name="jd_image" id="jd_image" accept="image/*">
+          </label>
+          <div class="fname" id="fname"></div>
+
+          <div class="row">
+            <div>
+              <label for="company">Company <span style="color:var(--slate);font-weight:400">(optional)</span></label>
+              <input type="text" id="company" name="company" value="{{ company }}" placeholder="e.g. Accenture">
+            </div>
+            <div>
+              <label for="role">Role title <span style="color:var(--slate);font-weight:400">(optional)</span></label>
+              <input type="text" id="role" name="role" value="{{ role }}" placeholder="e.g. Business Transformation Manager">
+            </div>
+          </div>
+
+          <div class="btnrow">
+            <button class="btn" type="submit" name="action" value="resume">📄 Generate résumé</button>
+            <button class="btn ghostbtn" type="submit" name="action" value="cover">✉ Generate cover letter</button>
+            <button class="btn ghostbtn" type="submit" name="action" value="master">🗂 Master CV (everything)</button>
+          </div>
+          <p class="hint">Two buttons, two documents — generate whichever you need. Nothing is invented:
+          your real experience is reordered, emphasized, and re-worded into the JD's own vocabulary,
+          and any gaps are flagged.
+          Company / role personalize the cover letter. <b>Master CV</b> ignores the JD entirely and
+          prints your complete record &mdash; every skill, project and bullet.</p>
+        </div>
+
+        <!-- RESULT -->
+        <div class="card">
+          {% if report and report.is_master %}
+            <p class="eyebrow">Master CV &mdash; complete record</p>
+            {% if role_head %}<div class="role">{{ role_head }}</div>{% endif %}
+            <p class="note">No JD applied. Nothing re-ordered, re-worded or held back:
+            <b>{{ report.n_skills }}</b> skills, <b>{{ report.n_projects }}</b> projects,
+            <b>{{ report.n_bullets }}</b> bullets across <b>{{ report.n_roles }}</b> roles.
+            This is the source your tailored résumé draws from &mdash; keep it for your own
+            reference and send the tailored one to employers.</p>
+            <div class="dl">
+              <a class="primary" href="/download/{{ resume_pdf }}"><span>⬇ Master CV</span><span class="k">PDF</span></a>
+              <a class="ghost" href="/view/{{ resume_pdf }}" target="_blank"><span>Open master CV in tab</span><span>↗</span></a>
+            </div>
+            <p class="note">To add or edit anything on it, edit <code>profile.py</code> &mdash;
+            both documents are generated from that one file.</p>
+          {% elif report %}
+            <p class="eyebrow">Résumé score vs. JD</p>
+            {% if role_head %}<div class="role">{{ role_head }}</div>{% endif %}
+            <div class="score">
+              <div class="ring" style="--v:{{ report.score }}"><b>{{ report.score }}%</b></div>
+              <div class="lab">
+                <div class="rating">{{ report.rating }}</div>
+                <div class="ratingsub">Overall résumé match for this job description</div>
+              </div>
+            </div>
+            <div class="bars">
+              <div class="bar"><span>Theme coverage</span><i style="--w:{{ report.themes_pct }}"></i><b>{{ report.themes_pct }}%</b></div>
+              <div class="bar"><span>Keyword overlap</span><i style="--w:{{ report.keywords_pct }}"></i><b>{{ report.keywords_pct }}%</b></div>
+              <div class="bar"><span>Skills alignment</span><i style="--w:{{ report.skills_pct }}"></i><b>{{ report.skills_pct }}%</b></div>
+            </div>
+            <p class="note">Composite of the three above — {{ report.matched|length }}/{{ report.jd_required }} JD
+            themes and {{ report.kw_hit|length }}/{{ report.kw_total }} salient JD keywords matched.</p>
+
+            <div class="dl">
+              {% if resume_pdf %}
+                <a class="primary" href="/download/{{ resume_pdf }}"><span>⬇ Tailored résumé</span><span class="k">PDF</span></a>
+                <a class="ghost" href="/view/{{ resume_pdf }}" target="_blank"><span>Open résumé in tab</span><span>↗</span></a>
+              {% endif %}
+              {% if cover_pdf %}
+                <a class="primary" href="/download/{{ cover_pdf }}"><span>⬇ Cover letter</span><span class="k">PDF</span></a>
+                <a class="ghost" href="/view/{{ cover_pdf }}" target="_blank"><span>Open cover letter in tab</span><span>↗</span></a>
+              {% endif %}
+            </div>
+            {% if resume_pdf and not cover_pdf %}
+              <p class="note">Need the matching letter too? Click <b>Generate cover letter</b> — the JD is still loaded.</p>
+            {% elif cover_pdf and not resume_pdf %}
+              <p class="note">Need the résumé too? Click <b>Generate résumé</b> — the JD is still loaded.</p>
+            {% endif %}
+
+            <h3>Matched · {{ report.matched|length }}</h3>
+            <ul class="tags">
+              {% for t in report.matched %}<li class="m">{{ t }}</li>{% endfor %}
+            </ul>
+
+            {% if report.reworded %}
+              <h3>Re-worded to the JD's language · {{ report.reworded|length }}</h3>
+              <ul class="tags">
+                {% for t in report.reworded %}<li class="w">{{ t }}</li>{% endfor %}
+              </ul>
+              <p class="note">Same experience, phrased the way this JD phrases it — so a keyword-matching
+              ATS sees its own terms. Only interchangeable wordings are swapped; no claim is changed.</p>
+            {% endif %}
+
+            {% if report.gaps %}
+              <h3>Gaps — in JD, not in résumé · {{ report.gaps|length }}</h3>
+              <ul class="tags">
+                {% for t in report.gaps %}<li class="g">{{ t }}</li>{% endfor %}
+              </ul>
+              <p class="note">These appear in the JD but aren't evidenced in your profile. If you
+              actually have them, add them in <code>profile.py</code>; otherwise the cover letter
+              already frames them as fast-ramp areas.</p>
+            {% endif %}
+          {% else %}
+            <p class="eyebrow">How it works</p>
+            <ol class="steps">
+              <li>Paste a JD <b>or</b> upload a screenshot; optionally add the company &amp; role.</li>
+              <li>The bot scans for domain keywords, floats matching <b>skills</b> to the top,
+                  re-ranks each job's <b>bullets</b> and <b>projects</b>, and rebuilds your headline.</li>
+              <li>Download the regenerated <b>résumé</b> and <b>cover letter</b>, and review the
+                  match &amp; gap report that appears right here.</li>
+            </ol>
+            <p class="note">Tip: launch with <code>Start Resume Bot.bat</code> (or <code>python app.py</code>).
+            Don't open <code>index.html</code> directly — it must run through the app.</p>
+          {% endif %}
+        </div>
+      </div>
+    </form>
+
+    <p class="foot">Offline · edit your master profile in <code>profile.py</code> · <b>nothing leaves this machine</b>.</p>
+  </div>
+
+  <script>
+    // filename echo + drag-highlight for the drop zone
+    var inp = document.getElementById('jd_image'),
+        drop = document.getElementById('drop'),
+        fname = document.getElementById('fname');
+    if (inp) {
+      inp.addEventListener('change', function () {
+        fname.textContent = inp.files.length ? '✓ ' + inp.files[0].name : '';
+      });
+      ['dragenter','dragover'].forEach(function (e) {
+        drop.addEventListener(e, function (ev) { ev.preventDefault(); drop.classList.add('hot'); });
+      });
+      ['dragleave','drop'].forEach(function (e) {
+        drop.addEventListener(e, function () { drop.classList.remove('hot'); });
+      });
+    }
+  </script>
+</body>
+</html>
