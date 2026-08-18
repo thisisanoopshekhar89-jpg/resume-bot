@@ -14,3 +14,6 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+
+# Screening answers hold salary data
+linkedin/answers.json
