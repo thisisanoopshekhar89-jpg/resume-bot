@@ -614,7 +614,10 @@ def align(jd_text):
         scored = [(bullet_score(b, jd_tokens), i, b)
                   for i, b in enumerate(job['bullets'])]
         scored.sort(key=lambda x: (-x[0], x[1]))
-        exp_out.append({'title': speak_jd(job['title'], lex, fired),
+        # Employer and job titles are proper nouns - never re-worded. Swapping here
+        # renamed a real role ("Agentic AI Operations" -> "AI Agent Operations"),
+        # which misstates the record rather than re-phrasing a claim.
+        exp_out.append({'title': job['title'],
                         'meta': job['meta'],
                         'bullets': [speak_jd(b, lex, fired) for _, _, b in scored]})
 
